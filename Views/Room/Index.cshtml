@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Heads{
+<style>
+        @@font-face {
+            font-family: 'font';
+            src: url("font/GamjaFlower-Regular.ttf");
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #535c68;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7ed6df;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22a6b3;
+        }
+        * {
+            font-family: 'font';
+        }
+        body {
+            background-image: url('/img/cafeDoor.jpg');
+        }
+        div {
+            width: 400px;
+            height: 500px;
+            margin: 0 auto;
+            margin-top: 150px;
+            border: 2px solid black;
+            border-radius: 1em;
+            background: white;
+            opacity: 0.9;
+        }
+        hr {
+            border: 1px solid black;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: black;
+            font-size: 60px;
+        }
+        #create {
+            width: 80%;
+            height: 35px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 70px;
+            border: 0;
+            border-radius: 5px;
+            color: white;
+            font-size: 25px;
+            background: #26de81;
+            cursor: pointer;
+        }
+        #create:hover {
+            background: #20bf6b;
+        }
+        #text {
+            width: 80%;
+            height: 35px;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+            margin-top: 80px;
+            box-sizing: border-box;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 25px;
+        }
+        #join {
+            width: 80%;
+            height: 35px;
+            display: block;
+            margin: 0 auto;
+            border: 0;
+            border-radius: 5px;
+            background: #fd9644;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        #join:hover {
+            background: #fa8231;
+        }
+        footer {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            color: white;
+            font-size: 20px;
+        }
+</style>
+}
+<div>
+    <h1>노래 듣자♪</h1>
+    <form asp-action="Admin">
+        <input type="submit" id="create" value="방 생성">
+    </form>
+    <hr>
+    <form asp-action="Guest" id="myForm">
+        <input type="text" id="text" placeholder="들어갈 방 번호 입력"><br>
+        <input type="submit" id="join" value="방 참가" onclick="getNum()">
+    </form>
+</div>
+<footer>
+    잘생긴 이수, 몬생긴 준하, 다크서클사센치 든빵이에 의해 탄생한 <span style="font-weight: bold;font-style: italic; color: gold;">"노래 듣자♪"</span> 누리집
+</footer>
+
+@section Scripts
+{
+    <script>
+     var number;
+     function getNum() {
+         number = document.getElementById('text').value;
+         document.getElementById("myForm").action += "/" + number;
+     }
+    </script>
+}

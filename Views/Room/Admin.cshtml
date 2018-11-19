@@ -1,0 +1,309 @@
+﻿@model SunrinMPReq.Models.RoomModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@section Heads
+    {
+    <style>
+        @@font-face {
+            font-family: 'font';
+            src: url("/font/GamjaFlower-Regular.ttf");
+        }
+
+        * {
+            font-family: 'font', cursive;
+        }
+
+        body {
+            background-image: url('/img/darkCafe.png');
+        }
+
+        #listDiv {
+            overflow: auto;
+            width: 900px;
+            height: 200px;
+            margin: 30px 20px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #535c68;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7ed6df;
+            border-radius: 10px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #22a6b3;
+            }
+
+        #roomNumber {
+            width: 80px;
+            height: 40px;
+            position: fixed;
+            right: 0;
+            margin: 0px 40px;
+            border: 2px solid white;
+            box-shadow: 0px 0px 40px purple;
+            border-radius: 5px;
+            color: white;
+            background: transparent;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        table, td, th, tr {
+            width: 800px;
+            border: 1px solid white;
+            border-collapse: collapse;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        th {
+            background: black;
+        }
+
+        .link {
+            display: none;
+        }
+
+        #order {
+            width: 300px;
+        }
+
+        #addSong {
+            width: 100px;
+            height: 30px;
+            margin-left: 20px;
+            margin-top: 10px;
+            border: 0;
+            border-radius: 5px;
+            background: #c7ecee;
+            font-size: 25px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+            #addSong:hover {
+                background: #95afc0;
+            }
+
+        #playing {
+            width: 1100px;
+            height: 400px;
+            margin: 0 auto;
+            margin-top: 60px;
+            border: 3px solid white;
+        }
+
+        #lpIMG {
+            width: 30px;
+            height: 30px;
+            display: inline;
+        }
+
+        span {
+            display: block;
+            margin: 20px 30px;
+            color: white;
+            font-size: 30px;
+        }
+
+        #playingInfo {
+            width: 100%;
+            height: 100px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 40px;
+            text-align: center;
+            border: 0;
+            background: none;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        #playingInfo2 {
+            width: 100%;
+            height: 100px;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            border: 0;
+            background: none;
+            color: white;
+            font-size: 30px;
+        }
+
+        #buttons {
+            width: 220px;
+            margin: 0 auto;
+        }
+
+        #next {
+            width: 100px;
+            height: 40px;
+            display: none;
+            position: absolute;
+            border: 0;
+            border-radius: 5px;
+            background: #2ed573;
+            color: white;
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+            #next:hover {
+                background: #20b85f;
+            }
+
+        #go {
+            width: 100px;
+            height: 40px;
+            display: none;
+            position: absolute;
+            margin-left: 120px;
+            border: 0;
+            border-radius: 5px;
+            background: #00a8ff;
+            color: white;
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+            #go:hover {
+                background: #0097e6;
+            }
+    </style>
+}
+<input type="text" id="roomNumber" value="@Model.RoomId" readonly="readonly">
+<div id="listDiv">
+    <table id="list">
+        <tr>
+            <th id="order">순서</th>
+            <th>곡명</th>
+            <th>아티스트</th>
+            <th>신청자</th>
+            <th class="link">링크</th>
+        </tr>
+    </table>
+</div>
+<button id="addSong" onclick="addSong()">노래추가</button>
+<div id="playing">
+    <form>
+        <span><img src="/img/lp.gif" id="lpIMG">&nbsp;현재 재생 중인 곡♫</span>
+        <input type="text" id="playingInfo">
+        <input type="text" id="playingInfo2">
+        <div id="buttons">
+            <input type="button" id="next" value="다음곡" onclick="nextSong()">
+            <input type="button" id="go" value="링크이동" onclick="goLink()">
+        </div>
+    </form>
+</div>
+@ViewData["adminkey"]
+@section Scripts
+    {
+    <script>
+
+
+        var playingInfo; //= document.getElementById('playingInfo').value = `${songName}-${artist} [${name}]`;
+        var text = document.getElementById('playingInfo');
+        text.readOnly = true;
+
+        var playingInfo2;// = document.getElementById('playingInfo2').value = `${link}`;
+        var text2 = document.getElementById('playingInfo2');
+        text2.readOnly = true;
+
+        var i = 0;
+
+        var next = document.getElementById('next');
+        var go = document.getElementById('go');
+
+        function addSong(songName,artist,name,link) {
+            i++;
+            var table = document.getElementById('list');
+            var tr = table.insertRow(i);
+            var tdOrder = tr.insertCell(0);
+            var tdSongName = tr.insertCell(1);
+            var tdArtist = tr.insertCell(2);
+            var tdName = tr.insertCell(3);
+            var tdLink = tr.insertCell(4);
+            tdOrder.setAttribute('id', 'order');
+            tdOrder.innerHTML = i;
+            tdSongName.innerHTML = songName;
+            tdArtist.innerHTML = artist;
+            tdName.innerHTML = name;
+            tdLink.setAttribute('class', 'link');
+            tdLink.innerHTML = link;
+            if (i > 0) {
+                next.style.display = "block";
+                go.style.display = "block";
+            }
+        }
+        
+        function nextSong() {
+            if (i == 0) return;
+            fetch("/api/SongReq/@Model.RoomId",
+                {
+                    method: "Delete"
+                }).then(function (res) {
+                i--;
+                for(var j=1;j<=i+1;j++){
+                    document.getElementById('list').rows[j].cells[0].innerHTML--;
+                }
+                var playingSongName = document.getElementById('list').rows[1].cells[1].innerHTML;
+                var playingArtist = document.getElementById('list').rows[1].cells[2].innerHTML;
+                var playingName = document.getElementById('list').rows[1].cells[3].innerHTML;
+                var playingLink = document.getElementById('list').rows[1].cells[4].innerHTML;
+                playingInfo = document.getElementById('playingInfo').value = `${playingSongName}-${playingArtist} [${playingName}]`;
+                playingInfo2 = document.getElementById('playingInfo2').value = `${playingLink}`;
+                document.getElementById("list").deleteRow(1);
+                if (i <= 0) {
+                    next.style.display = "none";
+                }
+            });
+        }
+
+        function goLink() {
+            var togo = document.getElementById('playingInfo2').value;
+            if (togo.slice(0, 4) == "http") {
+                window.open(togo, '_blank');
+            }
+            else if (togo.slice(0, 4) != "http") {
+                window.open(`http://${togo}`, '_blank');
+            }
+        }
+
+
+        function tt() {
+            fetch("/api/SongReq/@Model.RoomId",
+                {
+                    method: "GET"
+                }).then(function(response) { return response.json(); })
+                .then(function (res) {
+                    var a = document.getElementById('list').rows.length-1;
+                    if (res.length>a) {
+                        for (var i = a; i < res.length; i++) {
+                            console.log(res[i]);
+                            addSong(res[i].songName, res[i].artist, res[i].requester,res[i].link);
+                        }
+                    }
+            });
+        }
+
+        setInterval(tt, 5000);
+
+    </script>
+}

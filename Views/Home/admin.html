@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="./assets/icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&amp;subset=korean" rel="stylesheet">
+    <title>ADMIN</title>
+    <style>
+        *{
+            font-family: 'Gamja Flower', cursive;
+        }
+        body{
+            background-image: url('./assets/darkCafe.png');
+        }
+        #listDiv{
+            overflow: auto;
+            width: 900px;
+            height: 200px;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #535c68; 
+        }
+ 
+        ::-webkit-scrollbar-thumb {
+            background: #7ed6df;
+            border-radius: 10px; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22a6b3; 
+        }
+        table, td, th, tr{
+            width: 800px;
+            border: 1px solid white;
+            border-collapse: collapse;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            opacity: 0.8;
+        }
+        th{
+            background: black;
+        }
+        #addSong{
+            width: 100px;
+            height: 30px;
+            margin-top: 10px;
+            border: 0;
+            border-radius: 5px;
+            background: #c7ecee;
+            font-size: 25px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        #addSong:hover{
+            background: #95afc0;
+        }
+        #playing{
+            width: 1100px;
+            height: 400px;
+            margin: 0 auto;
+            margin-top: 60px;
+            border: 3px solid white;
+        }
+        span{
+            display: block;
+            margin: 30px 30px;
+            color: white;
+            font-size: 30px;
+        }
+        #playingInfo{
+            width: 100%;
+            height: 100px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 80px;
+            text-align: center;
+            border: 0;
+            background: none;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        #next{
+            width: 80px;
+            height: 40px;
+            display: none;
+            margin: 0 auto;
+            border: 0;
+            border-radius: 5px;
+            background: #2ed573;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        #next:hover{
+            background: #20b85f;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="listDiv">
+        <table id="list">
+            <tr>
+                <th>곡명</th>
+                <th>아티스트</th>
+                <th>신청자</th>
+            </tr>
+        </table>
+    </div>
+    <button id="addSong" onclick="addSong()">노래추가</button>
+    <div id="playing">
+        <form>
+            <span>현재 재생 중인 곡♫</span>
+            <input type="text" id="playingInfo">
+            <input type="button" id="next" value="다음곡" onclick="nextSong()">
+        </form>
+    </div>
+    <script>
+        var songName = "곡명";
+        var artist = "아티스트";
+        var name = "신청자";
+
+        var playingInfo = document.getElementById('playingInfo').value = `${songName}-${artist} [${name}]`;
+        var text = document.getElementById('playingInfo');
+        text.readOnly = true;
+
+        var i = 0;
+
+        var next = document.getElementById('next');
+
+        function addSong() {
+            i++;
+            var table = document.getElementById('list');
+            var tr = table.insertRow(i);
+            var tdSongName = tr.insertCell(0);
+            var tdArtist = tr.insertCell(1);
+            var tdName = tr.insertCell(2);
+            tdSongName.innerHTML = songName;
+            tdArtist.innerHTML = artist;
+            tdName.innerHTML = name;
+            if (i > 0) {
+                next.style.display = "block";
+            }
+        }
+        function nextSong() {
+            fetch("/api/SongReq",{
+                method: "DELETE"
+            })
+            i--;
+            var playingSongName = document.getElementById('list').rows[1].cells[0].innerHTML;
+            var playingArtist = document.getElementById('list').rows[1].cells[1].innerHTML;
+            var playingName = document.getElementById('list').rows[1].cells[2].innerHTML;
+            playingInfo = document.getElementById('playingInfo').value = `${playingSongName}-${playingArtist} [${playingName}]`;
+            document.getElementById("list").deleteRow(1);
+            if (i <= 0) {
+                next.style.display = "none";
+            }
+        }
+        
+        function tt() {
+            
+        }
+        
+    </script>
+</body>
+
+</html>

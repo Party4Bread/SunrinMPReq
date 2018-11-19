@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Room\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Room\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Room\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Room\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Room\Index.cshtml" />
+  </ItemGroup>
+</Project>
