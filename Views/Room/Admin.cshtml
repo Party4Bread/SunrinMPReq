@@ -278,10 +278,12 @@
 
         function goLink() {
             var togo = document.getElementById('playingInfo2').value;
-            if (togo.slice(0, 4) == "http") {
+            var togoComp = togo.slice(0,4);
+
+            if (togoComp.toLowerCase() == "http") {
                 window.open(togo, '_blank');
             }
-            else if (togo.slice(0, 4) != "http") {
+            else if (togoComp.toLowerCase() != "http") {
                 window.open(`http://${togo}`, '_blank');
             }
         }
