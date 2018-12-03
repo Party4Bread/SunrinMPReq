@@ -9,7 +9,7 @@
     <style>
         @@font-face {
             font-family: 'font';
-            src: url("/font/GamjaFlower-Regular.ttf");
+            src: url("/font/NotoSansCJKkr-Black.otf");
         }
 
         * {
@@ -23,8 +23,9 @@
         #listDiv {
             overflow: auto;
             width: 900px;
-            height: 200px;
+            height: 100px;
             margin: 4vh 13vw;
+            z-index: 1;
         }
 
         ::-webkit-scrollbar {
@@ -89,7 +90,7 @@
             border: 0;
             border-radius: 5px;
             background: #c7ecee;
-            font-size: 25px;
+            font-size: 20px;
             cursor: pointer;
             opacity: 0.7;
         }
@@ -97,6 +98,19 @@
             #addSong:hover {
                 background: #95afc0;
             }
+
+        #con {
+            position:absolute;
+            top:0;right:0;bottom:0;left:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            display:-webkit-flex;
+            -webkit-align-item:center;
+            -webkit-justify-content:center;
+            z-index: -1;
+        }
 
         #playing {
             width: 1100px;
@@ -200,16 +214,18 @@
         </tr>
     </table>
 </div>
-<div id="playing">
-    <form>
-        <span><img src="/img/lp.gif" id="lpIMG">&nbsp;현재 재생 중인 곡♫</span>
-        <input type="text" id="playingInfo">
-        <input type="text" id="playingInfo2">
-        <div id="buttons">
-            <input type="button" id="next" value="다음곡" onclick="nextSong()">
-            <input type="button" id="go" value="링크이동" onclick="goLink()">
-        </div>
-    </form>
+<div id="con">
+    <div id="playing">
+        <form>
+            <span><img src="/img/lp.gif" id="lpIMG">&nbsp;현재 재생 중인 곡♫</span>
+            <input type="text" id="playingInfo">
+            <input type="text" id="playingInfo2">
+            <div id="buttons">
+                <input type="button" id="next" value="다음곡" onclick="nextSong()">
+                <input type="button" id="go" value="링크이동" onclick="goLink()">
+            </div>
+        </form>
+    </div>
 </div>
 @ViewData["adminkey"]
 @section Scripts

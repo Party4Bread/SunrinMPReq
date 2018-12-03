@@ -5,7 +5,7 @@
 <style>
         @@font-face {
             font-family: 'font';
-            src: url("font/GamjaFlower-Regular.ttf");
+            src: url("font/NotoSansCJKkr-Black.otf");
         }
         ::-webkit-scrollbar {
             width: 10px;
@@ -26,7 +26,18 @@
         body {
             background-image: url('/img/cafeDoor.jpg');
         }
-        div {
+        #con {
+            position:absolute;
+            top:0;right:0;bottom:0;left:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            display:-webkit-flex;
+            -webkit-align-item:center;
+            -webkit-justify-content:center;
+        }
+        #main {
             width: 400px;
             height: 500px;
             margin: 0 auto;
@@ -98,16 +109,18 @@
         }
 </style>
 }
-<div>
-    <h1>노래 듣자♪</h1>
-    <form asp-action="Admin">
-        <input type="submit" id="create" value="방 생성">
-    </form>
-    <hr>
-    <form asp-action="Guest" id="myForm">
-        <input type="text" id="text" placeholder="들어갈 방 번호 입력"><br>
-        <input type="submit" id="join" value="방 참가" onclick="getNum()">
-    </form>
+<div id="con">
+    <div id="main">
+        <h1>노래 듣자♪</h1>
+        <form asp-action="Admin">
+            <input type="submit" id="create" value="방 생성">
+        </form>
+        <hr>
+        <form asp-action="Guest" id="myForm">
+            <input type="text" id="text" placeholder="들어갈 방 번호 입력"><br>
+            <input type="submit" id="join" value="방 참가" onclick="getNum()">
+        </form>
+    </div>
 </div>
 <footer>
     잘생긴 이수, 몬생긴 준하, 다크서클사센치 든빵이에 의해 탄생한 <span style="font-weight: bold;font-style: italic; color: gold;">"노래 듣자♪"</span> 누리집
